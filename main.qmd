@@ -1,0 +1,54 @@
+---
+title: Consultation Notes
+author: Mariah A. Knowles
+format: html
+bibliography: main.bib
+---
+
+LDA has been used to model Reddit parenting posts [@sepahpour2022mothers].
+They chose 12 topics of nouns because it maximized a coherence score.
+That score [defined in @roder2015exploring] is a measure of collocation,
+not coherence as defined in philosophy [@murphy-coherentism].
+
+A set of statements is coherent when it hangs together, when the statements
+mutually support one another. The importance of coherence depends on one's
+stance to research evaluation criteria. Coherence could be *necessary*, among
+other possible criteria. Coherence could be necessary and *by itself sufficient*.
+It could be that coherence is neither necessary nor sufficient, but incoherent
+work is *unjustifiable*. And it could be that coherence is neither necessary nor
+sufficient, but coherence *boosts* evaluation.
+
+Maximizing collocation does not ensure that sort of coherence. It
+does produce topics that are easy to name. Still, that alone does not amount to a
+conceptual category. One's conclusion will turn on a set of conceptual categories,
+and these categories must fulfill a number of criteria: They should
+be fair to theory, fair to the data, and fair to the population under study
+[@shaffer2021we].
+
+The authors' use of their topics may or may not be fair to theory: They explain how
+each aligns with their research problem, but the set of conceptual categories is taken
+as granted. A better theory may come from a different arrangement of the same ideas,
+a higher order of the same ideas, or with some ideas added to or removed from the mix. In
+qualitative research, these conceptual categories arise from rigorous close reading
+of one's data, driven by prompts aligned with one's research problem [@emerson2011writing].
+The authors' topics were derived atheoretically, then used to structure a theoretical discussion.
+This is like trying to write a book report from the table of contents alone. This limitation
+is permissible, given the circumstance of the data, and in line with the authors' aims,
+assumptions, and claims as researchers. Consultation with subject matter experts could
+alleviate this limitation.
+
+Their topics may or may not be fair to the data: They infer conceptual categories from
+word lists alone, but they don't appear to re-ground them in subjects' actual posts.
+The conceptual categories they infer from their topics may or may not align with
+the same set of posts labeled with those topics, and may or may not align between
+two humans indepedently identifying the same conceptual category. This alignment
+should be validated, because a code label is a researcher claim that a conceptual
+category appears or does not appear in unit of analysis. We ought to take these claims
+seriously. This lack of validation is a weakness of all topic modeling based work I've
+seen.  Measures exist for automated coders (like LDA) and a sample of the data coded
+by a pair of humans [@shaffer2021we].
+
+Their topics may or may not be fair to the population under study: No indication
+was made that the authors were member-researchers or that they involved subjects in
+the research process. This is a limitation of all "fly on the wall" style research.
+When analyzing speech one should always involve participants [@shaffer2021we].
