@@ -37,6 +37,8 @@ end
 data[!, :ID] = 1:nrow(data)
 ```
 
+# Bar Chart
+
 ```{julia}
 codes = [
     :GOOD_ASPECTS,
@@ -84,6 +86,8 @@ plot(string.(codes),
     rotation=-90,
     xticks=:all)
 ```
+
+# Biplot
 
 ```{julia}
 biplotFilter(i, j, ci, cj) = i == j
