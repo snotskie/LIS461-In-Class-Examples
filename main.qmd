@@ -1,54 +1,97 @@
 ---
-title: Consultation Notes
+title: LIS 461 In Class Examples
 author: Mariah A. Knowles
-format: html
-bibliography: main.bib
+format:
+  html:
+    code-fold: true
+jupyter: julia-1.8
 ---
 
-LDA has been used to model Reddit parenting posts [@sepahpour2022mothers].
-They chose 12 topics of nouns because it maximized a coherence score.
-That score [defined in @roder2015exploring] is a measure of collocation,
-not coherence as defined in philosophy [@murphy-coherentism].
+# Install Packages
 
-A set of statements is coherent when it hangs together, when the statements
-mutually support one another. The importance of coherence depends on one's
-stance to research evaluation criteria. Coherence could be *necessary*, among
-other possible criteria. Coherence could be necessary and *by itself sufficient*.
-It could be that coherence is neither necessary nor sufficient, but incoherent
-work is *unjustifiable*. And it could be that coherence is neither necessary nor
-sufficient, but coherence *boosts* evaluation.
+```{julia}
+using Pkg
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+Pkg.add("Plots")
+Pkg.add(url="https://github.com/snotskie/EpistemicNetworkAnalysis.jl")
+using CSV
+using DataFrames
+using Plots
+using EpistemicNetworkAnalysis
+```
 
-Maximizing collocation does not ensure that sort of coherence. It
-does produce topics that are easy to name. Still, that alone does not amount to a
-conceptual category. One's conclusion will turn on a set of conceptual categories,
-and these categories must fulfill a number of criteria: They should
-be fair to theory, fair to the data, and fair to the population under study
-[@shaffer2021we].
+# Load Data
 
-The authors' use of their topics may or may not be fair to theory: They explain how
-each aligns with their research problem, but the set of conceptual categories is taken
-as granted. A better theory may come from a different arrangement of the same ideas,
-a higher order of the same ideas, or with some ideas added to or removed from the mix. In
-qualitative research, these conceptual categories arise from rigorous close reading
-of one's data, driven by prompts aligned with one's research problem [@emerson2011writing].
-The authors' topics were derived atheoretically, then used to structure a theoretical discussion.
-This is like trying to write a book report from the table of contents alone. This limitation
-is permissible, given the circumstance of the data, and in line with the authors' aims,
-assumptions, and claims as researchers. Consultation with subject matter experts could
-alleviate this limitation.
+```{julia}
+data = DataFrame(CSV.File("data.csv"))
+for col in names(data)
+    data[!, col] = replace(data[!, col], missing => 0)
+end
 
-Their topics may or may not be fair to the data: They infer conceptual categories from
-word lists alone, but they don't appear to re-ground them in subjects' actual posts.
-The conceptual categories they infer from their topics may or may not align with
-the same set of posts labeled with those topics, and may or may not align between
-two humans indepedently identifying the same conceptual category. This alignment
-should be validated, because a code label is a researcher claim that a conceptual
-category appears or does not appear in unit of analysis. We ought to take these claims
-seriously. This lack of validation is a weakness of all topic modeling based work I've
-seen.  Measures exist for automated coders (like LDA) and a sample of the data coded
-by a pair of humans [@shaffer2021we].
+data[!, :ID] = 1:nrow(data)
+```
 
-Their topics may or may not be fair to the population under study: No indication
-was made that the authors were member-researchers or that they involved subjects in
-the research process. This is a limitation of all "fly on the wall" style research.
-When analyzing speech one should always involve participants [@shaffer2021we].
+```{julia}
+codes = [
+    :GOOD_ASPECTS,
+    :GOOD_CHASE,
+    :GOOD_FLOW,
+    :GOOD_TOP_DETAIL,
+    :GOOD_VARIETY,
+
+    :CITATIONS,
+    :BURIED_CLAIM,
+    :THINKING,
+    :UNCLEAR_STRATEGY,
+    :SPECIFIC_CASE,
+    :MORAL_PREMISE,
+    :MIXED_THEORY,
+
+    :HEDGE,
+    :PASSIVE,
+    :WASHY,
+    :DOES_NOT_FOLLOW,
+    :HISTORY,
+    :ADJ,
+    :COMPLEX,
+    :JARGON,
+    :NOSE,
+    :PAREN_RHET_Q,
+    :PRONOUNS,
+    :SHOULD,
+    :SNARK,
+    :TIMING,
+    :WALL,
+    :EXAMPLES,
+    :REDUNDANT,
+    :SUMMARIZE,
+    :DAMAGE,
+    :DISTILL,
+    :MORELESS,
+    :PREMISE_CLAIM,
+    :STRAWMAN
+]
+
+plot(string.(codes),
+    [sum(data[!, code]) for code in codes],
+    seriestype=:bar,
+    rotation=-90,
+    xticks=:all)
+```
+
+```{julia}
+biplotFilter(i, j, ci, cj) = i == j
+rotation = SVDRotation()
+# rotation = MulticlassRotation(:Grader)
+# rotation = Means2Rotation(:MIXED_THEORY, 0, 1, :SPECIFIC_CASE, 0, 1)
+ena = ENAModel(
+    data, codes, [:ID], [:ID],
+    relationshipFilter=biplotFilter,
+    dropEmpty=true,
+    rotateBy=rotation
+)
+
+display(ena)
+plot(ena)
+```
