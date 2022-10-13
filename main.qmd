@@ -47,37 +47,37 @@ codes = [
     :GOOD_TOP_DETAIL,
     :GOOD_VARIETY,
 
-    :CITATIONS,
-    :BURIED_CLAIM,
-    :THINKING,
-    :UNCLEAR_STRATEGY,
-    :SPECIFIC_CASE,
-    :MORAL_PREMISE,
-    :MIXED_THEORY,
+    # :CITATIONS,
+    # :BURIED_CLAIM,
+    # :THINKING,
+    # :UNCLEAR_STRATEGY,
+    # :SPECIFIC_CASE,
+    # :MORAL_PREMISE,
+    # :MIXED_THEORY,
 
-    :HEDGE,
-    :PASSIVE,
-    :WASHY,
-    :DOES_NOT_FOLLOW,
-    :HISTORY,
-    :ADJ,
-    :COMPLEX,
-    :JARGON,
-    :NOSE,
-    :PAREN_RHET_Q,
-    :PRONOUNS,
-    :SHOULD,
-    :SNARK,
-    :TIMING,
-    :WALL,
-    :EXAMPLES,
-    :REDUNDANT,
-    :SUMMARIZE,
-    :DAMAGE,
-    :DISTILL,
-    :MORELESS,
-    :PREMISE_CLAIM,
-    :STRAWMAN
+    # :HEDGE,
+    # :PASSIVE,
+    # :WASHY,
+    # :DOES_NOT_FOLLOW,
+    # :HISTORY,
+    # :ADJ,
+    # :COMPLEX,
+    # :JARGON,
+    # :NOSE,
+    # :PAREN_RHET_Q,
+    # :PRONOUNS,
+    # :SHOULD,
+    # :SNARK,
+    # :TIMING,
+    # :WALL,
+    # :EXAMPLES,
+    # :REDUNDANT,
+    # :SUMMARIZE,
+    # :DAMAGE,
+    # :DISTILL,
+    # :MORELESS,
+    # :PREMISE_CLAIM,
+    # :STRAWMAN
 ]
 
 plot(string.(codes),
@@ -91,8 +91,8 @@ plot(string.(codes),
 
 ```{julia}
 biplotFilter(i, j, ci, cj) = i == j
-rotation = SVDRotation()
-# rotation = MulticlassRotation(:Grader)
+# rotation = SVDRotation()
+rotation = MulticlassRotation(:Grader)
 # rotation = Means2Rotation(:MIXED_THEORY, 0, 1, :SPECIFIC_CASE, 0, 1)
 ena = ENAModel(
     data, codes, [:ID], [:ID],
@@ -101,6 +101,5 @@ ena = ENAModel(
     rotateBy=rotation
 )
 
-display(ena)
 plot(ena)
 ```
