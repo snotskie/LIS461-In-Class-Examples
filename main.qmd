@@ -104,7 +104,7 @@ separate_assignments = [:RandomID, :Assignment]
 
 # Plots
 
-What kind of feedback are students individually receiving across their workshops?
+## What kind of feedback are students individually receiving across their workshops?
 
 ```{julia}
 ena = ENAModel(
@@ -113,11 +113,10 @@ ena = ENAModel(
     rotateBy=most_variance
 )
 
-display(ena)
 plot(ena)
 ```
 
-How did feedback on the first workshop compare to the second, on average?
+## How did feedback on the first workshop compare to the second, on average?
 
 ```{julia}
 ena = ENAModel(
@@ -127,11 +126,10 @@ ena = ENAModel(
     rotateBy=first_vs_second
 )
 
-display(ena)
 plot(ena)
 ```
 
-How did feedback given by different graders compare, on average?
+## How did feedback given by different graders compare, on average?
 
 ```{julia}
 ena = ENAModel(
@@ -141,6 +139,5 @@ ena = ENAModel(
     rotateBy=grader_differences
 )
 
-display(ena)
 plot(ena)
 ```
