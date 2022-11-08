@@ -234,7 +234,7 @@ RandomID	Assignment	Grader	GOOD_ASPECTS	GOOD_CHASE	GOOD_FLOW	GOOD_TOP_DETAIL	GOO
 613813	Workshop 1	Martin	1																		1																
 613813	Workshop 2	Martin																																			
 615022	Workshop 1	Milton	1						1														1				1				1						
-615022	Workshop 2	Milton 	1		1										1								1				1				1						
+615022	Workshop 2	Milton	1		1										1								1				1				1						
 624273	Workshop 1	Martin	1												1											1				1				1	1		
 624273	Workshop 2	Martin					1																							1							
 624328	Workshop 1	Tracy													1	1										1					1	1					
@@ -354,10 +354,10 @@ RandomID	Assignment	Grader	GOOD_ASPECTS	GOOD_CHASE	GOOD_FLOW	GOOD_TOP_DETAIL	GOO
 888868	Workshop 2	Christine	1		1				1																												
 895899	Workshop 1	Martin	1	1	1																																
 895899	Workshop 2	Martin	1			1																													1		
-902126	Workshop 1	Milton 		1	1	1				1																							1				
-902126	Workshop 2	Milton 		1		1																															
+902126	Workshop 1	Milton		1	1	1				1																							1				
+902126	Workshop 2	Milton		1		1																															
 910326	Workshop 1	Milton				1									1						1				1						1						
-910326	Workshop 2	Milton 	1		1																1			1		1					1						
+910326	Workshop 2	Milton	1		1																1			1		1					1						
 920923	Workshop 1	Tracy		1																										1							
 920923	Workshop 2	Tracy		1	1																																
 925044	Workshop 1	Tracy																																			
