@@ -29,77 +29,118 @@ using EpistemicNetworkAnalysis
 # Load Data
 
 ```{julia}
-data = DataFrame(CSV.File("data.csv"))
+data = DataFrame(CSV.File("data.tsv"))
 for col in names(data)
     data[!, col] = replace(data[!, col], missing => 0)
 end
-
-data[!, :ID] = 1:nrow(data)
 ```
 
 # Bar Chart
 
 ```{julia}
-codes = [
+good_codes = [
     :GOOD_ASPECTS,
     :GOOD_CHASE,
     :GOOD_FLOW,
     :GOOD_TOP_DETAIL,
     :GOOD_VARIETY,
-
-    # :CITATIONS,
-    # :BURIED_CLAIM,
-    # :THINKING,
-    # :UNCLEAR_STRATEGY,
-    # :SPECIFIC_CASE,
-    # :MORAL_PREMISE,
-    # :MIXED_THEORY,
-
-    # :HEDGE,
-    # :PASSIVE,
-    # :WASHY,
-    # :DOES_NOT_FOLLOW,
-    # :HISTORY,
-    # :ADJ,
-    # :COMPLEX,
-    # :JARGON,
-    # :NOSE,
-    # :PAREN_RHET_Q,
-    # :PRONOUNS,
-    # :SHOULD,
-    # :SNARK,
-    # :TIMING,
-    # :WALL,
-    # :EXAMPLES,
-    # :REDUNDANT,
-    # :SUMMARIZE,
-    # :DAMAGE,
-    # :DISTILL,
-    # :MORELESS,
-    # :PREMISE_CLAIM,
-    # :STRAWMAN
 ]
 
-plot(string.(codes),
-    [sum(data[!, code]) for code in codes],
+common_codes = [
+    :CITATIONS,
+    :BURIED_CLAIM,
+    :UNCLEAR_STRATEGY,
+    :SPECIFIC_CASE,
+    :MORAL_PREMISE,
+    :WASHY,
+    :MIXED_THEORY,
+]
+
+uncommon_codes = [
+    :THINKING,
+    :HEDGE,
+    :PASSIVE,
+    :DOES_NOT_FOLLOW,
+    :HISTORY,
+    :ADJ,
+    :COMPLEX,
+    :JARGON,
+    :NOSE,
+    :PAREN_RHET_Q,
+    :PRONOUNS,
+    :SHOULD,
+    :SNARK,
+    :TIMING,
+    :WALL,
+    :EXAMPLES,
+    :REDUNDANT,
+    :SUMMARIZE,
+    :DAMAGE,
+    :DISTILL,
+    :MORELESS,
+    :PREMISE_CLAIM,
+    :STRAWMAN
+]
+
+all_codes = [good_codes..., common_codes..., uncommon_codes...]
+
+plot(string.(all_codes),
+    [sum(data[!, code]) for code in all_codes],
     seriestype=:bar,
     rotation=-90,
     xticks=:all)
 ```
 
-# Biplot
+# Model Options
 
 ```{julia}
-biplotFilter(i, j, ci, cj) = i == j
-# rotation = SVDRotation()
-rotation = MulticlassRotation(:Grader)
-# rotation = Means2Rotation(:MIXED_THEORY, 0, 1, :SPECIFIC_CASE, 0, 1)
+biplot_only = (i, j, ci, cj) -> i == j
+most_variance = SVDRotation()
+grader_differences = MulticlassRotation(:Grader)
+first_vs_second = MeansRotation(:Assignment, "Workshop 1", "Workshop 2")
+connected_assignments = [:RandomID]
+separate_assignments = [:RandomID, :Assignment]
+```
+
+# Plots
+
+What kind of feedback are students individually receiving across their workshops?
+
+```{julia}
 ena = ENAModel(
-    data, codes, [:ID], [:ID],
-    relationshipFilter=biplotFilter,
+    data, common_codes, connected_assignments, connected_assignments,
     dropEmpty=true,
-    rotateBy=rotation
+    rotateBy=most_variance
 )
 
+display(ena)
+plot(ena)
+```
+
+How did feedback on the first workshop compare to the second, on average?
+
+```{julia}
+ena = ENAModel(
+    data, common_codes, separate_assignments, separate_assignments,
+    dropEmpty=true,
+    relationshipFilter=biplot_only,
+    rotateBy=first_vs_second
+)
+
+display(ena)
+plot(ena)
+```
+
+How did feedback given by different graders compare, on average?
+
+```{julia}
+ena = ENAModel(
+    data, common_codes, separate_assignments, separate_assignments,
+    dropEmpty=true,
+    relationshipFilter=biplot_only,
+    rotateBy=grader_differences
+)
+
+display(ena)
 plot(ena)
 ```
