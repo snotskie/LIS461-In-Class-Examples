@@ -2,8 +2,7 @@
 title: LIS 461 In Class Examples
 author: Mariah A. Knowles
 format:
-  html:
-    code-fold: true
+  html: {}
 jupyter: julia-1.8
 ---
 
@@ -35,7 +34,7 @@ for col in names(data)
 end
 ```
 
-# Bar Chart
+# Organizing Labels
 
 ```{julia}
 good_feedback = [
@@ -46,69 +45,109 @@ good_feedback = [
     :GOOD_VARIETY,
 ]
 
-constructive_feedback = [
-    :CITATIONS,
-    :BURIED_CLAIM,
-    :UNCLEAR_STRATEGY,
-    :SPECIFIC_CASE,
-    :MORAL_PREMISE,
-    :WASHY,
-    :MIXED_THEORY,
-    :THINKING,
-    :HEDGE,
-    :PASSIVE,
-    :DOES_NOT_FOLLOW,
-    :HISTORY,
+mechanics_feedback = [
     :ADJ,
+    :CITATIONS,
     :COMPLEX,
+    :HEDGE,
     :JARGON,
     :NOSE,
     :PAREN_RHET_Q,
+    :PASSIVE,
     :PRONOUNS,
     :SHOULD,
     :SNARK,
     :TIMING,
-    :WALL,
+    :WALL
+]
+
+writing_feedback = [
+    :BURIED_CLAIM,
     :EXAMPLES,
     :REDUNDANT,
     :SUMMARIZE,
+    :THINKING,
+    :UNCLEAR_STRATEGY
+]
+
+depth_feedback = [
     :DAMAGE,
     :DISTILL,
     :MORELESS,
+    :SPECIFIC_CASE,
+    :WASHY
+]
+
+argument_feedback = [
+    :DOES_NOT_FOLLOW,
+    :HISTORY,
+    :MORAL_PREMISE,
+    :MIXED_THEORY,
     :PREMISE_CLAIM,
     :STRAWMAN
 ]
 
-all_feedback = vcat(good_feedback, constructive_feedback)
+constructive_feedback = vcat(mechanics_feedback,
+                             writing_feedback,
+                             depth_feedback,
+                             argument_feedback)
 
-plot(string.(all_feedback),
-    [sum(data[!, code]) for code in all_feedback],
-    seriestype=:bar,
-    rotation=-90,
-    xticks=:all,
-    legend=nothing)
+all_feedback = vcat(good_feedback, constructive_feedback)
 ```
 
-# Feedback Selection
+# Visualize Label Counts
 
 ```{julia}
-feedback_sums = reverse(
-    sort(
-        stack(
-            combine(data, [f => sum => f for f in constructive_feedback]...), 1:30
-        ),
-        :value
-    )
-)
+function calculate_sums(data, labels)
+    return labels |>
+        (z) -> [f => sum => f for f in z] |>
+        (z) -> combine(data, z...) |>
+        (z) -> stack(z, 1:length(labels)) |>
+        (z) -> sort(z, :value) |>
+        reverse
+end
 
-print(feedback_sums)
-common_feedback = Symbol.(feedback_sums[1:10, :variable])
-plot(string.(common_feedback),
-    [sum(data[!, code]) for code in common_feedback],
-    seriestype=:bar,
-    rotation=-90,
-    xticks=:all,
-    legend=nothing)
+function plot_sorted(data, labels)
+    feedback_sums = calculate_sums(data, labels)
+    println(feedback_sums)
+    plot(feedback_sums[!, :variable],
+        feedback_sums[!, :value],
+        seriestype=:bar,
+        rotation=-90,
+        xticks=:all,
+        legend=nothing)
+end
+
+plot_sorted(data, all_feedback)
+```
+
+# Combining Labels
+
+```{julia}
+derivedAnyCode!(data, :MECHANICS, mechanics_feedback...)
+derivedAnyCode!(data, :WRITING, writing_feedback...)
+derivedAnyCode!(data, :DEPTH, depth_feedback...)
+derivedAnyCode!(data, :ARGUMENT, argument_feedback...)
+combined_feedback = [:MECHANICS, :WRITING, :DEPTH, :ARGUMENT]
+```
+
+# Visualize Combined Label Counts
+
+```{julia}
+plot_sorted(data, combined_feedback)
+```
+
+# Selecting Interesting Labels
+
+```{julia}
+interesting_feedback = [:MECHANICS, :WRITING, argument_feedback..., depth_feedback...]
+selected_feedback = interesting_feedback |>
+    (z) -> calculate_sums(data, z) |>
+    (z) -> z[1:6, :variable] |>
+    (z) -> Symbol.(z)
+
+println(selected_feedback)
+plot_sorted(data, selected_feedback)
 ```
 
 # Model Options
@@ -128,10 +167,14 @@ separate_assignments = [:RandomID, :Assignment]
 
 ```{julia}
 ena = ENAModel(
-    data, common_feedback, connected_assignments, connected_assignments,
+    data, selected_feedback, connected_assignments, connected_assignments,
     dropEmpty=true,
     rotateBy=most_variance
 )
+
+# apply a little jitter before plotting to keep points from overlapping
+ena.accumModel[!, :pos_x] .+= 0.075 .* (rand.() .- .5)
+ena.accumModel[!, :pos_y] .+= 0.075 .* (rand.() .- .5)
 
 plot(ena)
 ```
@@ -140,11 +183,15 @@ plot(ena)
 
 ```{julia}
 ena = ENAModel(
-    data, common_feedback, separate_assignments, separate_assignments,
+    data, selected_feedback, separate_assignments, separate_assignments,
     dropEmpty=true,
     relationshipFilter=biplot_only,
     rotateBy=first_vs_second
 )
+
+# apply a little jitter before plotting to keep points from overlapping
+ena.accumModel[!, :pos_x] .+= 0.075 .* (rand.() .- .5)
+ena.accumModel[!, :pos_y] .+= 0.075 .* (rand.() .- .5)
 
 plot(ena)
 ```
@@ -153,11 +200,15 @@ plot(ena)
 
 ```{julia}
 ena = ENAModel(
-    data, common_feedback, separate_assignments, separate_assignments,
+    data, selected_feedback, separate_assignments, separate_assignments,
     dropEmpty=true,
     relationshipFilter=biplot_only,
     rotateBy=grader_differences
 )
+
+# apply a little jitter before plotting to keep points from overlapping
+ena.accumModel[!, :pos_x] .+= 0.075 .* (rand.() .- .5)
+ena.accumModel[!, :pos_y] .+= 0.075 .* (rand.() .- .5)
 
 plot(ena)
 ```

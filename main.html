@@ -132,17 +132,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="install-packages" class="level1">
 <h1>Install Packages</h1>
 <div class="cell" data-execution_count="1">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">add</span>(<span class="st">"CSV"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">add</span>(<span class="st">"DataFrames"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">add</span>(<span class="st">"Plots"</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">add</span>(url<span class="op">=</span><span class="st">"https://github.com/snotskie/EpistemicNetworkAnalysis.jl"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stderr">
-<pre><code>    Updating registry at `/opt/julia/registries/General.toml`
-   Resolving package versions...</code></pre>
+<pre><code>    Updating registry at `/opt/julia/registries/General.toml`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>   Resolving package versions...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>  No Changes to `/opt/julia/environments/v1.8/Project.toml`
@@ -177,164 +176,256 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="load-packages" class="level1">
 <h1>Load Packages</h1>
 <div class="cell" data-execution_count="2">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">EpistemicNetworkAnalysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">EpistemicNetworkAnalysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data" class="level1">
 <h1>Load Data</h1>
 <div class="cell" data-execution_count="3">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">DataFrame</span>(CSV.<span class="fu">File</span>(<span class="st">"data.tsv"</span>))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> <span class="fu">names</span>(data)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    data[!, col] <span class="op">=</span> <span class="fu">replace</span>(data[!, col], <span class="cn">missing</span> <span class="op">=&gt;</span> <span class="fl">0</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">DataFrame</span>(CSV.<span class="fu">File</span>(<span class="st">"data.tsv"</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> <span class="fu">names</span>(data)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    data[!, col] <span class="op">=</span> <span class="fu">replace</span>(data[!, col], <span class="cn">missing</span> <span class="op">=&gt;</span> <span class="fl">0</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="bar-chart" class="level1">
-<h1>Bar Chart</h1>
+<section id="organizing-labels" class="level1">
+<h1>Organizing Labels</h1>
 <div class="cell" data-execution_count="4">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>good_feedback <span class="op">=</span> [</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_ASPECTS,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_CHASE,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_FLOW,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_TOP_DETAIL,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_VARIETY,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>constructive_feedback <span class="op">=</span> [</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>CITATIONS,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>BURIED_CLAIM,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>UNCLEAR_STRATEGY,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SPECIFIC_CASE,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>MORAL_PREMISE,</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>WASHY,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>MIXED_THEORY,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>THINKING,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>HEDGE,</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PASSIVE,</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>DOES_NOT_FOLLOW,</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>HISTORY,</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ADJ,</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>COMPLEX,</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>JARGON,</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>NOSE,</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PAREN_RHET_Q,</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PRONOUNS,</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SHOULD,</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SNARK,</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>TIMING,</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>WALL,</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>EXAMPLES,</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>REDUNDANT,</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SUMMARIZE,</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>DAMAGE,</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>DISTILL,</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>MORELESS,</span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PREMISE_CLAIM,</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>STRAWMAN</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>all_feedback <span class="op">=</span> <span class="fu">vcat</span>(good_feedback, constructive_feedback)</span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">string</span>.(all_feedback),</span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    [<span class="fu">sum</span>(data[!, code]) for code <span class="kw">in</span> all_feedback],</span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    seriestype<span class="op">=:</span>bar,</span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    rotation<span class="op">=-</span><span class="fl">90</span>,</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=:</span>all,</span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="cn">nothing</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>good_feedback <span class="op">=</span> [</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_ASPECTS,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_CHASE,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_FLOW,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_TOP_DETAIL,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>GOOD_VARIETY,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>mechanics_feedback <span class="op">=</span> [</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>ADJ,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>CITATIONS,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>COMPLEX,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>HEDGE,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>JARGON,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>NOSE,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PAREN_RHET_Q,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PASSIVE,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PRONOUNS,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SHOULD,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SNARK,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>TIMING,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>WALL</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>writing_feedback <span class="op">=</span> [</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>BURIED_CLAIM,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>EXAMPLES,</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>REDUNDANT,</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SUMMARIZE,</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>THINKING,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>UNCLEAR_STRATEGY</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>depth_feedback <span class="op">=</span> [</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>DAMAGE,</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>DISTILL,</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>MORELESS,</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>SPECIFIC_CASE,</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>WASHY</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>argument_feedback <span class="op">=</span> [</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>DOES_NOT_FOLLOW,</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>HISTORY,</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>MORAL_PREMISE,</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>MIXED_THEORY,</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>PREMISE_CLAIM,</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>STRAWMAN</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>constructive_feedback <span class="op">=</span> <span class="fu">vcat</span>(mechanics_feedback,</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>                             writing_feedback,</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>                             depth_feedback,</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>                             argument_feedback)</span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>all_feedback <span class="op">=</span> <span class="fu">vcat</span>(good_feedback, constructive_feedback)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<p><img src="main_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
+<pre><code>35-element Vector{Symbol}:
+ :GOOD_ASPECTS
+ :GOOD_CHASE
+ :GOOD_FLOW
+ :GOOD_TOP_DETAIL
+ :GOOD_VARIETY
+ :ADJ
+ :CITATIONS
+ :COMPLEX
+ :HEDGE
+ :JARGON
+ :NOSE
+ :PAREN_RHET_Q
+ :PASSIVE
+ ⋮
+ :UNCLEAR_STRATEGY
+ :DAMAGE
+ :DISTILL
+ :MORELESS
+ :SPECIFIC_CASE
+ :WASHY
+ :DOES_NOT_FOLLOW
+ :HISTORY
+ :MORAL_PREMISE
+ :MIXED_THEORY
+ :PREMISE_CLAIM
+ :STRAWMAN</code></pre>
 </div>
 </div>
 </section>
-<section id="feedback-selection" class="level1">
-<h1>Feedback Selection</h1>
+<section id="visualize-label-counts" class="level1">
+<h1>Visualize Label Counts</h1>
 <div class="cell" data-execution_count="5">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>feedback_sums <span class="op">=</span> <span class="fu">reverse</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stack</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">combine</span>(data, [f <span class="op">=&gt;</span> sum <span class="op">=&gt;</span> f for f <span class="kw">in</span> constructive_feedback]<span class="op">...</span>), <span class="fl">1</span><span class="op">:</span><span class="fl">30</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>value</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(feedback_sums)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>common_feedback <span class="op">=</span> <span class="fu">Symbol</span>.(feedback_sums[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">:</span>variable])</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">string</span>.(common_feedback),</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    [<span class="fu">sum</span>(data[!, code]) for code <span class="kw">in</span> common_feedback],</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    seriestype<span class="op">=:</span>bar,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    rotation<span class="op">=-</span><span class="fl">90</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=:</span>all,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="cn">nothing</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">calculate_sums</span>(data, labels)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> labels <span class="op">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        (z) <span class="op">-&gt;</span> [f <span class="op">=&gt;</span> sum <span class="op">=&gt;</span> f for f <span class="kw">in</span> z] <span class="op">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        (z) <span class="op">-&gt;</span> <span class="fu">combine</span>(data, z<span class="op">...</span>) <span class="op">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        (z) <span class="op">-&gt;</span> <span class="fu">stack</span>(z, <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(labels)) <span class="op">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        (z) <span class="op">-&gt;</span> <span class="fu">sort</span>(z, <span class="op">:</span>value) <span class="op">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        reverse</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plot_sorted</span>(data, labels)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    feedback_sums <span class="op">=</span> <span class="fu">calculate_sums</span>(data, labels)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(feedback_sums)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(feedback_sums[!, <span class="op">:</span>variable],</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        feedback_sums[!, <span class="op">:</span>value],</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        seriestype<span class="op">=:</span>bar,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        rotation<span class="op">=-</span><span class="fl">90</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        xticks<span class="op">=:</span>all,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="cn">nothing</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sorted</span>(data, all_feedback)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>30×2 DataFrame
+<pre><code>35×2 DataFrame
  Row │ variable          value 
      │ String            Int64 
 ─────┼─────────────────────────
-   1 │ CITATIONS            84
-   2 │ SPECIFIC_CASE        80
-   3 │ MIXED_THEORY         72
-   4 │ BURIED_CLAIM         52
-   5 │ WASHY                50
-   6 │ UNCLEAR_STRATEGY     50
-   7 │ MORAL_PREMISE        47
-   8 │ THINKING             33
-   9 │ HISTORY              28
-  10 │ PASSIVE              28
-  11 │ DOES_NOT_FOLLOW      25
-  12 │ SUMMARIZE            24
-  13 │ EXAMPLES             20
-  14 │ REDUNDANT            15
-  15 │ MORELESS             14
-  16 │ DAMAGE               14
-  17 │ COMPLEX              14
-  18 │ HEDGE                14
-  19 │ NOSE                 12
-  20 │ PAREN_RHET_Q         10
-  21 │ SHOULD                9
-  22 │ TIMING                8
-  23 │ PRONOUNS              8
-  24 │ PREMISE_CLAIM         6
-  25 │ ADJ                   5
-  26 │ DISTILL               4
-  27 │ WALL                  3
-  28 │ JARGON                2
-  29 │ SNARK                 1
-  30 │ STRAWMAN              0</code></pre>
+   1 │ GOOD_CHASE          181
+   2 │ GOOD_FLOW           159
+   3 │ GOOD_ASPECTS        140
+   4 │ CITATIONS            84
+   5 │ GOOD_VARIETY         83
+   6 │ SPECIFIC_CASE        80
+   7 │ GOOD_TOP_DETAIL      76
+   8 │ MIXED_THEORY         72
+   9 │ BURIED_CLAIM         52
+  10 │ WASHY                50
+  11 │ UNCLEAR_STRATEGY     50
+  12 │ MORAL_PREMISE        47
+  13 │ THINKING             33
+  14 │ HISTORY              28
+  15 │ PASSIVE              28
+  16 │ DOES_NOT_FOLLOW      25
+  17 │ SUMMARIZE            24
+  18 │ EXAMPLES             20
+  19 │ REDUNDANT            15
+  20 │ MORELESS             14
+  21 │ DAMAGE               14
+  22 │ HEDGE                14
+  23 │ COMPLEX              14
+  24 │ NOSE                 12
+  25 │ PAREN_RHET_Q         10
+  26 │ SHOULD                9
+  27 │ TIMING                8
+  28 │ PRONOUNS              8
+  29 │ PREMISE_CLAIM         6
+  30 │ ADJ                   5
+  31 │ DISTILL               4
+  32 │ WALL                  3
+  33 │ JARGON                2
+  34 │ SNARK                 1
+  35 │ STRAWMAN              0</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <p><img src="main_files/figure-html/cell-6-output-2.svg" class="img-fluid"></p>
 </div>
 </div>
 </section>
+<section id="combining-labels" class="level1">
+<h1>Combining Labels</h1>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">derivedAnyCode!</span>(data, <span class="op">:</span>MECHANICS, mechanics_feedback<span class="op">...</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">derivedAnyCode!</span>(data, <span class="op">:</span>WRITING, writing_feedback<span class="op">...</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">derivedAnyCode!</span>(data, <span class="op">:</span>DEPTH, depth_feedback<span class="op">...</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">derivedAnyCode!</span>(data, <span class="op">:</span>ARGUMENT, argument_feedback<span class="op">...</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>combined_feedback <span class="op">=</span> [<span class="op">:</span>MECHANICS, <span class="op">:</span>WRITING, <span class="op">:</span>DEPTH, <span class="op">:</span>ARGUMENT]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>4-element Vector{Symbol}:
+ :MECHANICS
+ :WRITING
+ :DEPTH
+ :ARGUMENT</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-combined-label-counts" class="level1">
+<h1>Visualize Combined Label Counts</h1>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sorted</span>(data, combined_feedback)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4×2 DataFrame
+ Row │ variable   value   
+     │ String     Float64 
+─────┼────────────────────
+   1 │ MECHANICS    168.0
+   2 │ ARGUMENT     152.0
+   3 │ WRITING      150.0
+   4 │ DEPTH        138.0</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<p><img src="main_files/figure-html/cell-8-output-2.svg" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="selecting-interesting-labels" class="level1">
+<h1>Selecting Interesting Labels</h1>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>interesting_feedback <span class="op">=</span> [<span class="op">:</span>MECHANICS, <span class="op">:</span>WRITING, argument_feedback<span class="op">...</span>, depth_feedback<span class="op">...</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>selected_feedback <span class="op">=</span> interesting_feedback <span class="op">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    (z) <span class="op">-&gt;</span> <span class="fu">calculate_sums</span>(data, z) <span class="op">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    (z) <span class="op">-&gt;</span> z[<span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">:</span>variable] <span class="op">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    (z) <span class="op">-&gt;</span> <span class="fu">Symbol</span>.(z)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(selected_feedback)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sorted</span>(data, selected_feedback)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[:MECHANICS, :WRITING, :SPECIFIC_CASE, :MIXED_THEORY, :WASHY, :MORAL_PREMISE]
+6×2 DataFrame
+ Row │ variable       value   
+     │ String         Float64 
+─────┼────────────────────────
+   1 │ MECHANICS        168.0
+   2 │ WRITING          150.0
+   3 │ SPECIFIC_CASE     80.0
+   4 │ MIXED_THEORY      72.0
+   5 │ WASHY             50.0
+   6 │ MORAL_PREMISE     47.0</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<p><img src="main_files/figure-html/cell-9-output-2.svg" class="img-fluid"></p>
+</div>
+</div>
+</section>
 <section id="model-options" class="level1">
 <h1>Model Options</h1>
-<div class="cell" data-execution_count="6">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>biplot_only <span class="op">=</span> (i, j, ci, cj) <span class="op">-&gt;</span> i <span class="op">==</span> j</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>most_variance <span class="op">=</span> <span class="fu">SVDRotation</span>()</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>grader_differences <span class="op">=</span> <span class="fu">MulticlassRotation</span>(<span class="op">:</span>Grader)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>first_vs_second <span class="op">=</span> <span class="fu">MeansRotation</span>(<span class="op">:</span>Assignment, <span class="st">"Workshop 1"</span>, <span class="st">"Workshop 2"</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>connected_assignments <span class="op">=</span> [<span class="op">:</span>RandomID]</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>separate_assignments <span class="op">=</span> [<span class="op">:</span>RandomID, <span class="op">:</span>Assignment]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>biplot_only <span class="op">=</span> (i, j, ci, cj) <span class="op">-&gt;</span> i <span class="op">==</span> j</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>most_variance <span class="op">=</span> <span class="fu">SVDRotation</span>()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>grader_differences <span class="op">=</span> <span class="fu">MulticlassRotation</span>(<span class="op">:</span>Grader)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>first_vs_second <span class="op">=</span> <span class="fu">MeansRotation</span>(<span class="op">:</span>Assignment, <span class="st">"Workshop 1"</span>, <span class="st">"Workshop 2"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>connected_assignments <span class="op">=</span> [<span class="op">:</span>RandomID]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>separate_assignments <span class="op">=</span> [<span class="op">:</span>RandomID, <span class="op">:</span>Assignment]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>2-element Vector{Symbol}:
  :RandomID
  :Assignment</code></pre>
@@ -345,57 +436,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Plots</h1>
 <section id="what-kind-of-feedback-are-students-individually-receiving-across-their-workshops" class="level2">
 <h2 class="anchored" data-anchor-id="what-kind-of-feedback-are-students-individually-receiving-across-their-workshops">What kind of feedback are students individually receiving across their workshops?</h2>
-<div class="cell" data-execution_count="7">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ena <span class="op">=</span> <span class="fu">ENAModel</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    data, common_feedback, connected_assignments, connected_assignments,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    dropEmpty<span class="op">=</span><span class="cn">true</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    rotateBy<span class="op">=</span>most_variance</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ena)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<p><img src="main_files/figure-html/cell-8-output-1.svg" class="img-fluid"></p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ena <span class="op">=</span> <span class="fu">ENAModel</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    data, selected_feedback, connected_assignments, connected_assignments,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    dropEmpty<span class="op">=</span><span class="cn">true</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    rotateBy<span class="op">=</span>most_variance</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply a little jitter before plotting to keep points from overlapping</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>ena.accumModel[!, <span class="op">:</span>pos_x] <span class="op">.+=</span> <span class="fl">0.075</span> <span class="op">.*</span> (<span class="fu">rand</span>.() <span class="op">.-</span> <span class="fl">.5</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>ena.accumModel[!, <span class="op">:</span>pos_y] <span class="op">.+=</span> <span class="fl">0.075</span> <span class="op">.*</span> (<span class="fu">rand</span>.() <span class="op">.-</span> <span class="fl">.5</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ena)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<p><img src="main_files/figure-html/cell-11-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="how-did-feedback-on-the-first-workshop-compare-to-the-second-on-average" class="level2">
 <h2 class="anchored" data-anchor-id="how-did-feedback-on-the-first-workshop-compare-to-the-second-on-average">How did feedback on the first workshop compare to the second, on average?</h2>
-<div class="cell" data-execution_count="8">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ena <span class="op">=</span> <span class="fu">ENAModel</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    data, common_feedback, separate_assignments, separate_assignments,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    dropEmpty<span class="op">=</span><span class="cn">true</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    relationshipFilter<span class="op">=</span>biplot_only,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    rotateBy<span class="op">=</span>first_vs_second</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ena)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<p><img src="main_files/figure-html/cell-9-output-1.svg" class="img-fluid"></p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ena <span class="op">=</span> <span class="fu">ENAModel</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    data, selected_feedback, separate_assignments, separate_assignments,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    dropEmpty<span class="op">=</span><span class="cn">true</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    relationshipFilter<span class="op">=</span>biplot_only,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    rotateBy<span class="op">=</span>first_vs_second</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># apply a little jitter before plotting to keep points from overlapping</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>ena.accumModel[!, <span class="op">:</span>pos_x] <span class="op">.+=</span> <span class="fl">0.075</span> <span class="op">.*</span> (<span class="fu">rand</span>.() <span class="op">.-</span> <span class="fl">.5</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>ena.accumModel[!, <span class="op">:</span>pos_y] <span class="op">.+=</span> <span class="fl">0.075</span> <span class="op">.*</span> (<span class="fu">rand</span>.() <span class="op">.-</span> <span class="fl">.5</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ena)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<p><img src="main_files/figure-html/cell-12-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="how-did-feedback-given-by-different-graders-compare-on-average" class="level2">
 <h2 class="anchored" data-anchor-id="how-did-feedback-given-by-different-graders-compare-on-average">How did feedback given by different graders compare, on average?</h2>
-<div class="cell" data-execution_count="9">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ena <span class="op">=</span> <span class="fu">ENAModel</span>(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    data, common_feedback, separate_assignments, separate_assignments,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    dropEmpty<span class="op">=</span><span class="cn">true</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    relationshipFilter<span class="op">=</span>biplot_only,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    rotateBy<span class="op">=</span>grader_differences</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ena)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<p><img src="main_files/figure-html/cell-10-output-1.svg" class="img-fluid"></p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ena <span class="op">=</span> <span class="fu">ENAModel</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    data, selected_feedback, separate_assignments, separate_assignments,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    dropEmpty<span class="op">=</span><span class="cn">true</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    relationshipFilter<span class="op">=</span>biplot_only,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    rotateBy<span class="op">=</span>grader_differences</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># apply a little jitter before plotting to keep points from overlapping</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>ena.accumModel[!, <span class="op">:</span>pos_x] <span class="op">.+=</span> <span class="fl">0.075</span> <span class="op">.*</span> (<span class="fu">rand</span>.() <span class="op">.-</span> <span class="fl">.5</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>ena.accumModel[!, <span class="op">:</span>pos_y] <span class="op">.+=</span> <span class="fl">0.075</span> <span class="op">.*</span> (<span class="fu">rand</span>.() <span class="op">.-</span> <span class="fl">.5</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ena)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<p><img src="main_files/figure-html/cell-13-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
 </section>
